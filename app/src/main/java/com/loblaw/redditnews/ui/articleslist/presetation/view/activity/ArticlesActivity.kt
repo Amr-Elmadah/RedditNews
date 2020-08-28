@@ -55,7 +55,6 @@ class ArticlesActivity : AppCompatActivity() {
     }
 
     private fun getArticles() {
-        supportActionBar?.title = getString(R.string.kotlin_news)
         mViewModel.getArticles()
     }
 
