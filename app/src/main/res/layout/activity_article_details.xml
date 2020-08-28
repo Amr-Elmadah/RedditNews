@@ -35,50 +35,59 @@
             app:title="@{article.title}"
             app:titleTextColor="@color/white" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgArticleDetails"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_200sdp"
-            android:scaleType="fitXY"
-            android:visibility="@{article.thumbnail.empty?View.GONE:View.VISIBLE}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            bind:backgroundImageUrl="@{article.thumbnail}" />
-
         <ScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
             android:scrollbars="none"
-            android:visibility="@{article.body.empty?View.GONE:View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgArticleDetails">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-            <TextView
-                android:id="@+id/tvArticleBody"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:padding="@dimen/_10sdp"
-                android:text="@{article.body}"
-                android:textAlignment="viewStart"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/_12sdp" />
-        </ScrollView>
+                android:orientation="vertical">
 
-        <include
-            android:id="@+id/llNoData"
-            layout="@layout/layout_no_data"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="@{article.body.empty?View.VISIBLE:View.GONE}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgArticleDetails" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgArticleDetails"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:visibility="@{article.thumbnail.empty?View.GONE:View.VISIBLE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    bind:backgroundImageUrl="@{article.thumbnail}" />
+
+                <TextView
+                    android:id="@+id/tvArticleBody"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:padding="@dimen/_10sdp"
+                    android:text="@{article.body}"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/_12sdp"
+                    android:visibility="@{article.body.empty?View.GONE:View.VISIBLE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imgArticleDetails" />
+
+                <include
+                    android:id="@+id/llNoData"
+                    layout="@layout/layout_no_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{article.body.empty?View.VISIBLE:View.GONE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imgArticleDetails" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

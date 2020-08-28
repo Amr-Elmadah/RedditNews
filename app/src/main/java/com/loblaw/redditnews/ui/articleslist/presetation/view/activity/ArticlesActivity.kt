@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -65,7 +64,7 @@ class ArticlesActivity : AppCompatActivity() {
 
     @SuppressLint("CheckResult")
     private fun observeArticlesChange() {
-        mViewModel.mArticles.observe(this, Observer { articles ->
+        mViewModel.mArticles.observe(this, { articles ->
             articles?.let {
                 srlArticles.isRefreshing = false
                 adapter.replaceAllItems(it.toMutableList())
@@ -100,7 +99,6 @@ class ArticlesActivity : AppCompatActivity() {
 
     private fun openArticleDetailsActivity(article: Article) {
         val intent = Intent(this, ArticleDetailsActivity::class.java)
-//        article.thumbnail="https://learn.g2.com/hubfs/What_is_Information_Technology.jpg"
         intent.putExtra(ArticleDetailsActivity.EXTRA_ARTICLE, article)
         startActivity(intent)
     }
