@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">RedditNews</string>
+    <string name="app_name">LobLawRedditNews</string>
+    <string name="internet_connection">No internet connection</string>
+
+    //ArticlesList
+    <string name="kotlin_news">Kotlin News</string>
+    <string name="no_data">No data</string>
 </resources>
