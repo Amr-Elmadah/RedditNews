@@ -1,6 +1,7 @@
 package com.loblaw.redditnews.ui.articleslist.presetation.view.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -12,6 +13,7 @@ import com.loblaw.redditnews.R
 import com.loblaw.redditnews.base.presentation.view.extension.showSnack
 import com.loblaw.redditnews.base.presentation.viewmodel.ViewModelFactory
 import com.loblaw.redditnews.data.remote.network.response.Article
+import com.loblaw.redditnews.ui.articledetails.ArticleDetailsActivity
 import com.loblaw.redditnews.ui.articleslist.presetation.view.adapter.ArticlesAdapter
 import com.loblaw.redditnews.ui.articleslist.presetation.viewmodel.ArticlesViewModel
 import dagger.android.AndroidInjection
@@ -37,10 +39,6 @@ class ArticlesActivity : AppCompatActivity() {
         AndroidInjection.inject(this)
         setContentView(R.layout.activity_articles)
         setupControllers()
-    }
-
-    override fun onStart() {
-        super.onStart()
         getArticles()
     }
 
@@ -101,7 +99,9 @@ class ArticlesActivity : AppCompatActivity() {
     }
 
     private fun openArticleDetailsActivity(article: Article) {
-        //TODO: If required to open details activity of the clicked article
-        llMainContent.showSnack(article.body)
+        val intent = Intent(this, ArticleDetailsActivity::class.java)
+//        article.thumbnail="https://learn.g2.com/hubfs/What_is_Information_Technology.jpg"
+        intent.putExtra(ArticleDetailsActivity.EXTRA_ARTICLE, article)
+        startActivity(intent)
     }
 }

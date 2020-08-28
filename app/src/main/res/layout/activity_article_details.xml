@@ -23,9 +23,14 @@
             android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            android:textAlignment="viewStart"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_back"
             app:subtitleTextColor="@color/colorAccent"
             app:title="@{article.title}"
             app:titleTextColor="@color/white" />
@@ -34,22 +39,43 @@
             android:id="@+id/imgArticleDetails"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_200sdp"
-            android:layout_weight="1"
+            android:scaleType="fitXY"
             android:visibility="@{article.thumbnail.empty?View.GONE:View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             bind:backgroundImageUrl="@{article.thumbnail}" />
 
-        <TextView
-            android:id="@+id/tvArticleBody"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
-            android:text="@{article.body}"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/_14sdp"
-            android:textStyle="bold"
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:scrollbars="none"
+            android:visibility="@{article.body.empty?View.GONE:View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgArticleDetails">
+
+            <TextView
+                android:id="@+id/tvArticleBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:padding="@dimen/_10sdp"
+                android:text="@{article.body}"
+                android:textAlignment="viewStart"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_12sdp" />
+        </ScrollView>
+
+        <include
+            android:id="@+id/llNoData"
+            layout="@layout/layout_no_data"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{article.body.empty?View.VISIBLE:View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imgArticleDetails" />

@@ -1,6 +1,12 @@
 package com.loblaw.redditnews.data.remote.network.response
 
+import android.os.Parcelable
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import com.google.gson.annotations.SerializedName
+import com.loblaw.redditnews.base.presentation.view.extension.loadFromUrl
+import kotlinx.android.parcel.Parcelize
+import org.parceler.Parcel
 
 data class NewsResponse(
     @SerializedName("data")
@@ -17,6 +23,7 @@ data class ChildData(
     var article: Article
 )
 
+@Parcelize
 data class Article(
     @SerializedName("title")
     var title: String,
@@ -24,4 +31,9 @@ data class Article(
     var body: String,
     @SerializedName("thumbnail")
     var thumbnail: String
-)
+) : Parcelable
+
+@BindingAdapter("bind:backgroundImageUrl")
+fun loadBackgroundImage(view: ImageView, imageUrl: String?) {
+    imageUrl?.let { view.loadFromUrl(it) }
+}
