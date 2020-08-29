@@ -11,7 +11,10 @@ import com.loblaw.redditnews.ui.articleslist.presetation.view.adapter.ArticlesAd
 import com.loblaw.redditnews.ui.articleslist.presetation.viewmodel.ArticlesViewModel
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 
+@InstallIn(ApplicationComponent::class)
 @Module
 class ArticlesModule {
 

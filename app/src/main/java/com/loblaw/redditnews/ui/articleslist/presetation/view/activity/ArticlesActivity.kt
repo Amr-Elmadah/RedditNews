@@ -15,11 +15,13 @@ import com.loblaw.redditnews.data.remote.network.response.Article
 import com.loblaw.redditnews.ui.articledetails.ArticleDetailsActivity
 import com.loblaw.redditnews.ui.articleslist.presetation.view.adapter.ArticlesAdapter
 import com.loblaw.redditnews.ui.articleslist.presetation.viewmodel.ArticlesViewModel
-import dagger.android.AndroidInjection
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_articles.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
+@AndroidEntryPoint
+@ExperimentalCoroutinesApi
 class ArticlesActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory<ArticlesViewModel>
@@ -36,7 +38,6 @@ class ArticlesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AndroidInjection.inject(this)
         setContentView(R.layout.activity_articles)
         setupControllers()
         getArticles()
@@ -52,8 +53,8 @@ class ArticlesActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
     }
 
-    @ExperimentalCoroutinesApi
     private fun getArticles() {
+        //Don't forget to uncomment the line of adding call adapter if you'll use the RX approach otherwise (Coroutines) comment it again
         mViewModel.getArticlesWithCoroutines()
     }
 

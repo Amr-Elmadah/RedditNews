@@ -5,6 +5,8 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.google.gson.annotations.SerializedName
 import com.loblaw.redditnews.base.presentation.view.extension.loadFromUrl
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import kotlinx.android.parcel.Parcelize
 
 data class NewsResponse(

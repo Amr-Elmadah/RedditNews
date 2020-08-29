@@ -1,26 +1,15 @@
 package com.loblaw.redditnews
 
-import android.app.Activity
 import android.app.Application
 import com.facebook.stetho.Stetho
-import com.loblaw.redditnews.injection.DaggerAppComponent
 import com.squareup.leakcanary.LeakCanary
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import javax.inject.Inject
+import dagger.hilt.android.HiltAndroidApp
 
-class App : Application(), HasActivityInjector {
-    @Inject
-    lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
-
-    override fun activityInjector(): AndroidInjector<Activity> {
-        return activityDispatchingAndroidInjector
-    }
+@HiltAndroidApp
+open class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        initDagger()
         initStetho()
         initLeakCanary()
     }
@@ -34,13 +23,6 @@ class App : Application(), HasActivityInjector {
                     .build()
             )
         }
-    }
-
-    private fun initDagger() {
-        DaggerAppComponent.builder()
-            .application(this)
-            .build()
-            .inject(this)
     }
 
     private fun initLeakCanary() {

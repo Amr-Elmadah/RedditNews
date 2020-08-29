@@ -5,14 +5,17 @@ import com.loblaw.redditnews.data.remote.network.retrofit.RedditAPI
 import com.loblaw.redditnews.data.remote.network.retrofit.RetrofitClient
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import javax.inject.Named
 import javax.inject.Singleton
 
+@InstallIn(ApplicationComponent::class)
 @Module
-class NetworkModule {
+open class NetworkModule {
 
     object DAGGER_CONSTANTS {
         const val BASE_URL = "baseUrlString"

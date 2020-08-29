@@ -27,12 +27,9 @@ class RetrofitClient @Inject constructor(
 
         builder.baseUrl(baseURL)
             .addConverterFactory(GsonConverterFactory.create(gson))
-//            .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
+//            .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create()) //To use rx approach
 
         builder.client(httpClient.build())
         return builder.build()
     }
 }
-
-
-

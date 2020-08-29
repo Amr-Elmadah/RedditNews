@@ -3,11 +3,11 @@ package com.loblaw.redditnews.injection.context
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import javax.inject.Singleton
 
-@Module
-class ContextModule(private val appContext: Context) {
-	@Provides
-	@Singleton
+open class ContextModule(private val appContext: Context) {
+
 	fun provideContext() = appContext
 }
