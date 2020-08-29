@@ -17,6 +17,7 @@ import com.loblaw.redditnews.ui.articleslist.presetation.view.adapter.ArticlesAd
 import com.loblaw.redditnews.ui.articleslist.presetation.viewmodel.ArticlesViewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_articles.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
 class ArticlesActivity : AppCompatActivity() {
@@ -51,15 +52,16 @@ class ArticlesActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
     }
 
+    @ExperimentalCoroutinesApi
     private fun getArticles() {
-        mViewModel.getArticles()
+        mViewModel.getArticlesWithCoroutines()
     }
 
     private fun setupRecyclerView() {
         manager.orientation = RecyclerView.VERTICAL
         rvArticles.layoutManager = manager
         rvArticles.adapter = adapter
-        srlArticles.setOnRefreshListener { mViewModel.getArticles() }
+        srlArticles.setOnRefreshListener { getArticles() }
     }
 
     @SuppressLint("CheckResult")

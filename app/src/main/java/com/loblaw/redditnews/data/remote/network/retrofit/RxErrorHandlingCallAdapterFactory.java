@@ -3,6 +3,9 @@ package com.loblaw.redditnews.data.remote.network.retrofit;
 
 import com.loblaw.redditnews.base.domain.exception.LobLawNewsException;
 import com.loblaw.redditnews.data.remote.network.exception.NetworkException;
+
+import org.jetbrains.annotations.NotNull;
+
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
@@ -26,7 +29,7 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
     }
 
     @Override
-    public CallAdapter<?, ?> get(final Type returnType, final Annotation[] annotations, final Retrofit retrofit) {
+    public CallAdapter<?, ?> get(@NotNull final Type returnType, @NotNull final Annotation[] annotations, @NotNull final Retrofit retrofit) {
         return new RxCallAdapterWrapper(mOriginalCallAdapterFactory.get(returnType, annotations, retrofit));
     }
 
@@ -42,9 +45,10 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
             return mWrappedCallAdapter.responseType();
         }
 
+        @NotNull
         @SuppressWarnings("unchecked")
         @Override
-        public Object adapt(final Call<R> call) {
+        public Object adapt(@NotNull final Call<R> call) {
             Object result = mWrappedCallAdapter.adapt(call);
             if (result instanceof Single) {
                 return ((Single) result).onErrorResumeNext(throwable -> Single.error(asRetrofitException((Throwable) throwable)));

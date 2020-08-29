@@ -9,10 +9,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 class RetrofitClient @Inject constructor(
-    private val baseURL: String
-    , private val httpClient: OkHttpClient.Builder
-    , private val httpLoggingInterceptor: HttpLoggingInterceptor
-    , private val builder: Retrofit.Builder
+    private val baseURL: String,
+    private val httpClient: OkHttpClient.Builder,
+    private val httpLoggingInterceptor: HttpLoggingInterceptor,
+    private val builder: Retrofit.Builder
 ) {
 
     fun getInstance(): Retrofit {
@@ -27,7 +27,7 @@ class RetrofitClient @Inject constructor(
 
         builder.baseUrl(baseURL)
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
+//            .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
 
         builder.client(httpClient.build())
         return builder.build()

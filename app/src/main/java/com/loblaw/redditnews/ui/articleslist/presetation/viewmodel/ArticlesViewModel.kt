@@ -1,14 +1,20 @@
 package com.loblaw.redditnews.ui.articleslist.presetation.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.loblaw.redditnews.base.domain.exception.LobLawNewsException
 import com.loblaw.redditnews.base.presentation.model.ObservableResource
 import com.loblaw.redditnews.base.presentation.viewmodel.BaseViewModel
-import com.loblaw.redditnews.data.remote.network.response.Article
 import com.loblaw.redditnews.data.remote.network.response.ChildData
 import com.loblaw.redditnews.ui.articleslist.domain.interactor.GetArticlesUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ArticlesViewModel @Inject constructor(
@@ -41,5 +47,29 @@ class ArticlesViewModel @Inject constructor(
                 }
             })
         )
+    }
+
+    @ExperimentalCoroutinesApi
+    fun getArticlesWithCoroutines() {
+        viewModelScope.launch {
+            getArticlesUseCase.buildWithCoroutines(params = "")
+                .onStart {
+                    mAArticlesObservable.loading.postValue(true)
+                }
+                .catch {
+                    mAArticlesObservable.error.value = LobLawNewsException(LobLawNewsException.Kind.NETWORK)
+                }
+                .onCompletion {
+                    mAArticlesObservable.loading.postValue(false)
+                }
+                .collect {
+                    it.data.articles.let { articles ->
+                        if (articles.isNotEmpty()) {
+                            articlesList = articles.toMutableList()
+                            mArticles.value = articlesList
+                        }
+                    }
+                }
+        }
     }
 }
